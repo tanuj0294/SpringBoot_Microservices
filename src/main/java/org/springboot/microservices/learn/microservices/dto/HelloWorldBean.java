@@ -1,0 +1,43 @@
+package org.springboot.microservices.learn.microservices.dto;
+
+public class HelloWorldBean {
+	
+	String name;
+	
+	int age;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public HelloWorldBean(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+
+	public HelloWorldBean() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "HelloWorldBean [name=" + name + ", age=" + age + "]";
+	}
+	
+	
+	
+
+}
