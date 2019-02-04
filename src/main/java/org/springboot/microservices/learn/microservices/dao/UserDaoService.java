@@ -2,6 +2,7 @@ package org.springboot.microservices.learn.microservices.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springboot.microservices.learn.microservices.dto.User;
@@ -38,6 +39,19 @@ public class UserDaoService {
 				return u;
 			}
 		}
+		return null;
+	}
+	
+	public User deleteUserById(int id) {
+		Iterator<User> itr = users.iterator();
+		while(itr.hasNext()) {
+			User user = itr.next();
+			if(user.getId()==id) {
+				itr.remove();
+				return user;
+			}
+		}
+		
 		return null;
 	}
 }
