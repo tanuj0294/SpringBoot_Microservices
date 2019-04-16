@@ -24,11 +24,11 @@ public class ExceptionResponse {
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
-	public String getMessgae() {
+	public String getMessage() {
 		return message;
 	}
-	public void setMessgae(String messgae) {
-		this.message = messgae;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	public String getErrorCode() {
 		return errorCode;

@@ -1,12 +1,16 @@
 package org.springboot.microservices.learn.microservices.dto;
 
+import java.io.IOException;
 import java.util.Date;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-@Valid
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 public class User {
 	
 	private Integer id;
@@ -57,6 +61,10 @@ public class User {
 		this.dob = dob;
 	}
 	
-		
+		public static void main(String aap[]) throws JsonGenerationException, JsonMappingException, IOException {
+			User u = new User(11, "sss", new Date());
+			ObjectMapper m = new ObjectMapper();
+			m.writeValue(System.out, u);
+		}
 
 }
