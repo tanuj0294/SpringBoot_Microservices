@@ -3,6 +3,10 @@ package org.springboot.microservices.learn.microservices.dto;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -10,9 +14,11 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+@Entity
 public class User {
 	
+	@Id
+	@GeneratedValue
 	private Integer id;
 	
 	@Size(min=3)

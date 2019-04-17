@@ -6,12 +6,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springboot.microservices.learn.exception.UserNotFoundException;
 import org.springboot.microservices.learn.microservices.dao.UserDaoService;
 import org.springboot.microservices.learn.microservices.dto.User;
+import org.springboot.microservices.learn.microservices.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.hateoas.Resource;
@@ -34,17 +36,23 @@ public class UserResource {
 
 	@Autowired
 	MessageSource messageSource;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@GetMapping(value = "/users")
 	public List<User> getAllUsers() {
-		return userService.findAll();
+		return userRepo.findAll();
+		//return userService.findAll();
 	}
 
 	@GetMapping("/users/{id}")
 	public Resource<User> getUserById(@PathVariable(value = "id") Integer userId,
 			@RequestHeader(name = "Accept-Language", required = false) Locale locale) throws UserNotFoundException {
-		User user = userService.findOne(userId);
-		if (user == null) {
+	//	User user = userService.findOne(userId);
+		
+		Optional<User> user = userRepo.findById(userId);
+		if (!user.isPresent()) {
 			throw new UserNotFoundException("User not found with id=" + userId);
 		}
 		//TODO : Work in i18n
@@ -52,7 +60,7 @@ public class UserResource {
 		String greeting = messageSource.getMessage("hello", null, locale);
 		System.out.println(greeting);*/
 		// implementing HATEOAS for User by building a resource and returning it
-		Resource<User> resource = new Resource<User>(user);
+		Resource<User> resource = new Resource<User>(user.get());
 		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
 		resource.add(linkTo.withRel("all-users"));
 		return resource;
@@ -60,8 +68,8 @@ public class UserResource {
 
 	@PostMapping("/users")
 	public ResponseEntity<Object> saveUser(@Valid @RequestBody User user) {
-		userService.save(user);
-
+		//userService.save(user);
+		userRepo.saveAndFlush(user);
 		// URI location =
 		// ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").path("/{name}").buildAndExpand(user.getId(),
 		// user.getName()).toUri();
